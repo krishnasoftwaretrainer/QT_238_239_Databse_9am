@@ -1,0 +1,61 @@
+SQL*Plus: Release 11.2.0.2.0 Production on Mon Nov 2 10:31:11 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> create user qt238 identified by qt238;
+SP2-0640: Not connected
+SQL> connect sysdba;
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect sysdba;
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect / as sysdba;
+Connected.
+SQL> create user qt238 identified by qt238;
+
+User created.
+
+SQL> connect qt238;
+Enter password:
+ERROR:
+ORA-01045: user QT238 lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect / as sysdba;
+Connected.
+SQL> grant all privileges to qt238;
+
+Grant succeeded.
+
+SQL> connect qt238;
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect qt238;
+Enter password:
+Connected.
+SQL> connect / as sysdba;
+Connected.
+SQL> revoke all privileges from qt238;
+
+Revoke succeeded.
+
+SQL> connect qt238;
+Enter password:
+ERROR:
+ORA-01045: user QT238 lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL>

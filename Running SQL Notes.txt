@@ -1,0 +1,68 @@
+DataBase for QA:238 & 239 Batch:9am
+---------------
+Application:FrontEnd and BackEnd
+
+Database:Created Managed by dev team.
+
+To store the data and retrive the data.
+
+CRUD:Create Retrieve Update Delete
+
+Create database table
+Insert data into created table
+Select the inserted data 
+Update the existing data 
+Delete the data 
+
+Software:OracleDB
+
+SQL:Query formet
+
+SQL Commands:
+
+DDL:Data Definition Language
+[Create structure of database table]
+Create
+Alter
+Rename
+Truncate
+Drop
+
+DML:Data Manipulation Language
+Insert
+Update
+Select
+Delete
+
+DCL:Data Control Language
+Grant:Giving/Granting the Privilegs to user/db.
+Revoke:Revoke/Cancel/Delete the Privilegs to user.
+
+TCL:Transaction Control Language
+Commit
+Rollback
+SavePoint
+
+OracleDB: Download and Install OracleDB:
+11g version 
+
+OracleDB Download Link: https://www.oracle.com/database/technologies/xe-prior-release-downloads.html
+
+sysdba
+
+Database:Collection of tables.
+
+Table:Collection of rows and columns.
+
+Row 
+
+Column 
+
+Syntax:Create user username identified by password;
+
+SQL> connect / as sysdba;
+SQL> grant all privileges to qt238;
+SQL> revoke all privileges from qt238;
+
+SQL> connect qt238;
+Enter password:
