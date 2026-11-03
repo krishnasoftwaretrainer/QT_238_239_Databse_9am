@@ -59,3 +59,772 @@ ORA-01045: user QT238 lacks CREATE SESSION privilege; logon denied
 
 Warning: You are no longer connected to ORACLE.
 SQL>
+==============
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Nov 3 09:11:15 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt238
+Enter password:
+ERROR:
+ORA-01045: user QT238 lacks CREATE SESSION privilege; logon denied
+
+
+SQL> connect / as sysdba;
+Connected.
+SQL> grant all privileges to qt238;
+
+Grant succeeded.
+
+SQL> connect qt238
+Enter password:
+Connected.
+SQL> crerate table student(htno number(5),sname varchar4(15),dob date,percentage number(3,1));
+SP2-0734: unknown command beginning "crerate ta..." - rest of line ignored.
+SQL> create table student(htno number(5),sname varchar2(15),dob date,percentage number(3,1));
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(15)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+
+SQL> alter table student add(marks number(3));
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(15)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+ MARKS                                              NUMBER(3)
+
+SQL> alter table student modify(sname varchar(10));
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(10)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+ MARKS                                              NUMBER(3)
+
+SQL> alter table student modify(sname char(10));
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              CHAR(10)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+ MARKS                                              NUMBER(3)
+
+SQL> alter table student rename column htno to sid;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              CHAR(10)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+ MARKS                                              NUMBER(3)
+
+SQL> alter table student drop column marks;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              CHAR(10)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+
+SQL> rename student to stu1;
+
+Table renamed.
+
+SQL> desc student;
+ERROR:
+ORA-04043: object student does not exist
+
+
+SQL> desc stu1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              CHAR(10)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+
+SQL> insert into stu1 values(101,'Krishna','15/mar/98',99.9);
+
+1 row created.
+
+SQL> desc stu1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              CHAR(10)
+ DOB                                                DATE
+ PERCENTAGE                                         NUMBER(3,1)
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+
+SQL> insert into stu1 values(111111,'Krishna','15/mar/98',99.9);
+insert into stu1 values(111111,'Krishna','15/mar/98',99.9)
+                        *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> insert into stu1 values(11,'Krishna','15/mar/98',99.999);
+insert into stu1 values(11,'Krishna','15/mar/98',99.999)
+                                                 *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> insert into stu1 values(11,4568,'15/mar/98',99.9);
+
+1 row created.
+
+SQL> insert into stu1 values(11,#$#$%$#@%,'15/mar/98',99.9);
+insert into stu1 values(11,#$#$%$#@%,'15/mar/98',99.9)
+                           *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> insert into stu1 values(11,'#$#$%$#@%',15/mar/98,99.9);
+insert into stu1 values(11,'#$#$%$#@%',15/mar/98,99.9)
+                                          *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+        11 4568       15-MAR-98       99.9
+
+SQL> insert into stu1 values(101,'Krishna','15/mar/98');
+insert into stu1 values(101,'Krishna','15/mar/98')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into stu1(sid,sname,dob) values(102,'Suresh','11/jan/99');
+
+1 row created.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+        11 4568       15-MAR-98       99.9
+       102 Suresh     11-JAN-99
+
+SQL> commit;
+
+Commit complete.
+
+SQL> update table stu1 set sid=103;
+update table stu1 set sid=103
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update stu1 set sid=103;
+
+3 rows updated.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       103 Krishna    15-MAR-98       99.9
+       103 4568       15-MAR-98       99.9
+       103 Suresh     11-JAN-99
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+        11 4568       15-MAR-98       99.9
+       102 Suresh     11-JAN-99
+
+SQL> update stu1 set sid=103 where sid=11;
+
+1 row updated.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       103 4568       15-MAR-98       99.9
+       102 Suresh     11-JAN-99
+
+SQL> update stu1 set sid=102 where sid=11;
+
+0 rows updated.
+
+SQL> update stu1 set sid=102 where sid=103;
+
+1 row updated.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 4568       15-MAR-98       99.9
+       102 Suresh     11-JAN-99
+
+SQL> update stu1 set sid=103 where sname='Suresh';
+
+1 row updated.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 4568       15-MAR-98       99.9
+       103 Suresh     11-JAN-99
+
+SQL> update stu1 set sname='Kiran' where sname=4568;
+update stu1 set sname='Kiran' where sname=4568
+                                    *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> update stu1 set sname='Kiran' where sname='4568';
+
+1 row updated.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99
+
+SQL> update stu1 set percentage=77.7 where sname='Suresh';
+
+1 row updated.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> select sid,percentage from stu1;
+
+       SID PERCENTAGE
+---------- ----------
+       101       99.9
+       102       99.9
+       103       77.7
+
+SQL> select sid,percentage from stu1 where percentage>=99;
+
+       SID PERCENTAGE
+---------- ----------
+       101       99.9
+       102       99.9
+
+SQL> select sid,percentage from stu1 where percentage<=99;
+
+       SID PERCENTAGE
+---------- ----------
+       103       77.7
+
+SQL>
+============
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Nov 3 10:04:15 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt238;
+Enter password:
+Connected.
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> create table samp1(id number(5),name char(10));
+
+Table created.
+
+SQL> desc samp1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                NUMBER(5)
+ NAME                                              CHAR(10)
+
+SQL> insert into samp1 values(1,'erget');
+
+1 row created.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+
+SQL>
+
+=============
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Nov 3 10:04:14 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt238;
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect qt238;
+Enter password:
+Connected.
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> desc samp1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               CHAR(10)
+
+SQL> select * from samp1;
+
+no rows selected
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+
+SQL> insert into samp1 values(2,'dfwew');
+
+1 row created.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+==================
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into samp1 values(3,'aaaaa');
+
+1 row created.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+
+SQL> insert into samp1 values(3,'aaaaa');
+
+1 row created.
+
+SQL> insert into samp1 values(4,'bbbb');
+
+1 row created.
+
+SQL> insert into samp1 values(5,'cccc');
+
+1 row created.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+         5 cccc
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+
+SQL> insert into samp1 values(3,'aaaaa');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+
+SQL> insert into samp1 values(4,'bbbb');
+
+1 row created.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+
+SQL> insert into samp1 values(5,'cccc');
+
+1 row created.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+         5 cccc
+
+SQL> commit;
+
+Commit complete.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+         5 cccc
+
+SQL> commit;
+
+Commit complete.
+
+SQL> delete samp1;
+
+5 rows deleted.
+
+SQL> select * from samp1;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+         5 cccc
+
+SQL> delete samp1;
+
+5 rows deleted.
+
+SQL> select * from samp1;
+
+no rows selected
+
+SQL> desc samp1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               CHAR(10)
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+         5 cccc
+
+SQL> delete samp1 where id=5;
+
+1 row deleted.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+         5 cccc
+
+SQL> delete samp1 where id=5;
+
+1 row deleted.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+
+SQL> create table samp2 as select * from samp1;
+
+Table created.
+
+SQL> select * from samp1;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+
+SQL> select * from samp2;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+
+SQL> commit;
+
+Commit complete.
+
+SQL> truncate table samp2;
+
+Table truncated.
+
+SQL> select * from samp2;
+
+no rows selected
+
+SQL> desc samp2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               CHAR(10)
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp2;
+
+no rows selected
+
+SQL> create table samp3 as select * from samp1;
+
+Table created.
+
+SQL> select * from samp3;
+
+        ID NAME
+---------- ----------
+         1 erget
+         2 dfwew
+         3 aaaaa
+         4 bbbb
+
+SQL> drop table samp3;
+
+Table dropped.
+
+SQL> select * from samp3;
+select * from samp3
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from samp3;
+select * from samp3
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL>

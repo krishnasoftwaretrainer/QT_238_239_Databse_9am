@@ -66,3 +66,44 @@ SQL> revoke all privileges from qt238;
 
 SQL> connect qt238;
 Enter password:
+
+DataTypes:
+--------
+char 
+varchar
+varchar2
+
+number
+number(6,3) 5:total digits 2:digits after decimal point 
+567.234
+
+date:12/jan/26 12/january/2026
+timestamp:
+
+
+DDL: C A RE T D:Automatic Saving [Ctrl+z] 
+
+DML:I U S D:Save Manual and have Ctrl+z.
+
+Commit:Save 
+Rollback
+
+Delete:DML
+Using to delete the all records or specfic record.
+You can rollback the delete operations before commit.
+Structure of table is not deleted.
+Syntax:delete tablename;
+		delete tablename where condition;
+		
+Truncate:DDL 
+Using to delete the all records permanently.
+You dont have the rollback option.
+Structure of table is not deleted.
+Syntax:truncate table tablename;
+
+Drop:DDL 
+Using to drop command, delete all records along with structure permanently.
+You dont have the rollback option.
+Structure of table is also deleted.
+Syntax:drop table tablename;
+
