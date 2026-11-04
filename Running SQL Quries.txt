@@ -828,3 +828,1191 @@ ORA-00942: table or view does not exist
 
 
 SQL>
+
+
+SQL*Plus: Release 11.2.0.2.0 Production on Wed Nov 4 09:17:30 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt238
+Enter password:
+Connected.
+SQL> create table cons1(id number(5) primary key,name varchar2(10));
+
+Table created.
+
+SQL> desc cons1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(10)
+
+SQL> inert into cons1 values(1,'Krishna');
+SP2-0734: unknown command beginning "inert into..." - rest of line ignored.
+SQL> insert into cons1 values(1,'Krishna');
+
+1 row created.
+
+SQL> select * from cons1;
+
+        ID NAME
+---------- ----------
+         1 Krishna
+
+SQL> insert into cons1 values(1,'Krishna');
+insert into cons1 values(1,'Krishna')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT238.SYS_C006999) violated
+
+
+SQL> insert into cons1 values(2,'Krishna');
+
+1 row created.
+
+SQL> select * from cons1;
+
+        ID NAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+
+SQL> insert into cons1(id) values(3);
+
+1 row created.
+
+SQL> select * from cons1;
+
+        ID NAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+         3
+
+SQL> insert into cons1(name) values('vfg');
+insert into cons1(name) values('vfg')
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("QT238"."CONS1"."ID")
+
+
+SQL> create table cons2(id number(5),name varchar2(10) not null);
+
+Table created.
+
+SQL> insert into cons1(id) values(1);
+insert into cons1(id) values(1)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT238.SYS_C006999) violated
+
+
+SQL> insert into cons1 values(1,'Krishna');
+insert into cons1 values(1,'Krishna')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT238.SYS_C006999) violated
+
+
+SQL> insert into cons2 values(1,'Krishna');
+
+1 row created.
+
+SQL> insert into cons2 values(1,'Krishna');
+
+1 row created.
+
+SQL> insert into cons2 values(1,'Krishna');
+
+1 row created.
+
+SQL> select * from cons2;
+
+        ID NAME
+---------- ----------
+         1 Krishna
+         1 Krishna
+         1 Krishna
+
+SQL> create table cons3(id number(5),name varchar2(10) unique);
+
+Table created.
+
+SQL> insert into cons3 values(1,'Krishna');
+
+1 row created.
+
+SQL> select * from cons3;
+
+        ID NAME
+---------- ----------
+         1 Krishna
+
+SQL> insert into cons3 values(1,'Krishna');
+insert into cons3 values(1,'Krishna')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT238.SYS_C007001) violated
+
+
+SQL> insert into cons3(id) values(2);
+
+1 row created.
+
+SQL> select * from cons3;
+
+        ID NAME
+---------- ----------
+         1 Krishna
+         2
+
+SQL> create table emp(eid number(5),ename varchar2(10),salary number(5) default 5000);
+
+Table created.
+
+SQL> desc emp;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EID                                                NUMBER(5)
+ ENAME                                              VARCHAR2(10)
+ SALARY                                             NUMBER(5)
+
+SQL> insert into emp(eid,ename) values(101,'Krishna');
+
+1 row created.
+
+SQL> insert into emp(eid,ename) values(102,'Ramesh');
+
+1 row created.
+
+SQL> insert into emp(eid,ename) values(103,'Suresh');
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          5000
+       102 Ramesh           5000
+       103 Suresh           5000
+
+SQL> create table emp1(eid number(5),ename varchar2(10),salary number(5) check (salary>=5000));
+
+Table created.
+
+SQL> insert into emp(eid,ename,salary) values(101,'Krishna',6000);
+
+1 row created.
+
+SQL> select * from emp1;
+
+no rows selected
+
+SQL> insert into emp1(eid,ename,salary) values(101,'Krishna',6000);
+
+1 row created.
+
+SQL> select * from emp1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          6000
+
+SQL> insert into emp(eid,ename,salary) values(101,'Krishna',4000);
+
+1 row created.
+
+SQL> insert into emp1(eid,ename,salary) values(101,'Krishna',4000);
+insert into emp1(eid,ename,salary) values(101,'Krishna',4000)
+*
+ERROR at line 1:
+ORA-02290: check constraint (QT238.SYS_C007002) violated
+
+
+SQL>
+
+SQL> desc dual;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DUMMY                                              VARCHAR2(1)
+
+SQL> select * from dual;
+
+D
+-
+X
+
+SQL> insert into dual values('A');
+insert into dual values('A')
+            *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> drop table dual;
+drop table dual
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> delete dual;
+delete dual
+       *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> select 20+10 from emp;
+
+     20+10
+----------
+        30
+        30
+        30
+        30
+        30
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          5000
+       102 Ramesh           5000
+       103 Suresh           5000
+       101 Krishna          6000
+       101 Krishna          4000
+
+SQL> select * from emp2;
+select * from emp2
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from emp1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          6000
+
+SQL> select 20+10 from emp1;
+
+     20+10
+----------
+        30
+
+SQL> select 20+10 from dual;
+
+     20+10
+----------
+        30
+
+SQL> select 20+10+5 from dual;
+
+   20+10+5
+----------
+        35
+
+SQL> select 20+10+5 as addition from dual;
+
+  ADDITION
+----------
+        35
+
+SQL> select 20+10-5 as addition from dual;
+
+  ADDITION
+----------
+        25
+
+SQL> select 20+10*5 as mul from dual;
+
+       MUL
+----------
+        70
+
+SQL> select 20+10/5 as div from dual;
+
+       DIV
+----------
+        22
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          5000
+       102 Ramesh           5000
+       103 Suresh           5000
+       101 Krishna          6000
+       101 Krishna          4000
+
+SQL> update emp set salary=9000 where eid=101;
+
+3 rows updated.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          9000
+       102 Ramesh           5000
+       103 Suresh           5000
+       101 Krishna          9000
+       101 Krishna          9000
+
+SQL> delete emp where eid=101;
+
+3 rows deleted.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           5000
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into emp(eid,ename,salary) values(101,'Krishna',4000);
+
+1 row created.
+
+SQL> insert into emp(eid,ename,salary) values(104,'Krishna',6000);
+
+1 row created.
+
+SQL> insert into emp(eid,ename,salary) values(105,'Mohan',9000);
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> update emp set salary=7000 where eid=103;
+
+1 row updated.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from emp where salary>5000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where salary>=5000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where salary<5000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          4000
+
+SQL> select * from emp where salary<=5000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       101 Krishna          4000
+
+SQL> select * from emp where salary=5000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+
+SQL> select * from emp where salary!=5000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where salary<>5000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where salary>5000 and salary<7000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       104 Krishna          6000
+
+SQL> select * from emp where salary>5000 or salary<7000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where salary is not null;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> insert into emp(eid,ename) values(106,'efrf');
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+6 rows selected.
+
+SQL> select * from emp where salary is not null;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+6 rows selected.
+
+SQL> insert into emp(eid,ename) values(107,8000);
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+7 rows selected.
+
+SQL> insert into emp(eid) values(108);
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from emp where ename is not null;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+7 rows selected.
+
+SQL> select * from emp like 'K%';
+select * from emp like 'K%'
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from emp where like 'K%';
+select * from emp where like 'K%'
+                        *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp where ename like 'K%';
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          4000
+       104 Krishna          6000
+
+SQL> select * from emp where ename like '%h';
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+
+SQL> select * from emp where ename like '%H';
+
+no rows selected
+
+SQL> select * from emp where salary like '%00';
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from emp where salary like '%0000';
+
+no rows selected
+
+SQL> select * from emp where salary like '5%';
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       108                  5000
+       106 efrf             5000
+
+SQL> select * from emp where ename like '%a%';
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where ename like '%e%';
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       102 Ramesh           5000
+       103 Suresh           7000
+       106 efrf             5000
+
+SQL> SELECT * FROM emp WHERE salary IN (6000, 9000);
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> SELECT * FROM emp WHERE salary IN (2000, 9000);
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       105 Mohan            9000
+
+SQL> SELECT * FROM emp WHERE salary BETWEEN 6000 AND 8000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+
+SQL> SELECT * FROM emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> SELECT * FROM emp order by eid;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          4000
+       102 Ramesh           5000
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+       107 8000             5000
+       108                  5000
+
+8 rows selected.
+
+SQL> SELECT * FROM emp order by eid asc;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          4000
+       102 Ramesh           5000
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+       107 8000             5000
+       108                  5000
+
+8 rows selected.
+
+SQL> SELECT * FROM emp order by eid desc;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       108                  5000
+       107 8000             5000
+       106 efrf             5000
+       105 Mohan            9000
+       104 Krishna          6000
+       103 Suresh           7000
+       102 Ramesh           5000
+       101 Krishna          4000
+
+8 rows selected.
+
+SQL> SELECT * FROM emp order by salary desc;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       105 Mohan            9000
+       103 Suresh           7000
+       104 Krishna          6000
+       106 efrf             5000
+       102 Ramesh           5000
+       107 8000             5000
+       108                  5000
+       101 Krishna          4000
+
+8 rows selected.
+
+SQL> SELECT * FROM emp order by salary;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       101 Krishna          4000
+       102 Ramesh           5000
+       106 efrf             5000
+       107 8000             5000
+       108                  5000
+       104 Krishna          6000
+       103 Suresh           7000
+       105 Mohan            9000
+
+8 rows selected.
+
+SQL> SELECT DISTINCT SALARY FROM emp ORDER BY SALARY;
+
+    SALARY
+----------
+      4000
+      5000
+      6000
+      7000
+      9000
+
+SQL> select sum(salary) from emp;
+
+SUM(SALARY)
+-----------
+      46000
+
+SQL> select avg(salary) from emp;
+
+AVG(SALARY)
+-----------
+       5750
+
+SQL> select min(salary) from emp;
+
+MIN(SALARY)
+-----------
+       4000
+
+SQL> select max(salary) from emp;
+
+MAX(SALARY)
+-----------
+       9000
+
+SQL> select count(eid) from emp;
+
+COUNT(EID)
+----------
+         8
+
+SQL> select count(ename) from emp;
+
+COUNT(ENAME)
+------------
+           7
+
+SQL> select count(*) from emp;
+
+  COUNT(*)
+----------
+         8
+
+SQL> select count(distinct ename) from emp;
+
+COUNT(DISTINCTENAME)
+--------------------
+                   6
+
+SQL> select count(salary) from emp;
+
+COUNT(SALARY)
+-------------
+            8
+
+SQL> select count( distinct salary) from emp;
+
+COUNT(DISTINCTSALARY)
+---------------------
+                    5
+
+SQL> select upper(ename) from emp;
+
+UPPER(ENAM
+----------
+8000
+RAMESH
+SURESH
+
+KRISHNA
+KRISHNA
+MOHAN
+EFRF
+
+8 rows selected.
+
+SQL> select ename,upper(ename) from emp;
+
+ENAME      UPPER(ENAM
+---------- ----------
+8000       8000
+Ramesh     RAMESH
+Suresh     SURESH
+
+Krishna    KRISHNA
+Krishna    KRISHNA
+Mohan      MOHAN
+efrf       EFRF
+
+8 rows selected.
+
+SQL> select upper('abcdefgh') from dual;
+
+UPPER('A
+--------
+ABCDEFGH
+
+SQL> select lower('abcdefgh') from dual;
+
+LOWER('A
+--------
+abcdefgh
+
+SQL> select lower('abcDEFGH') from dual;
+
+LOWER('A
+--------
+abcdefgh
+
+SQL> select ename,lower(ename) from emp;
+
+ENAME      LOWER(ENAM
+---------- ----------
+8000       8000
+Ramesh     ramesh
+Suresh     suresh
+
+Krishna    krishna
+Krishna    krishna
+Mohan      mohan
+efrf       efrf
+
+8 rows selected.
+
+SQL> select ename,initcap(ename) from emp;
+
+ENAME      INITCAP(EN
+---------- ----------
+8000       8000
+Ramesh     Ramesh
+Suresh     Suresh
+
+Krishna    Krishna
+Krishna    Krishna
+Mohan      Mohan
+efrf       Efrf
+
+8 rows selected.
+
+SQL> select initcap('abcd') from dual;
+
+INIT
+----
+Abcd
+
+SQL> select initcap('aBCDF') from dual;
+
+INITC
+-----
+Abcdf
+
+SQL> select lenght('aBCDF') from dual;
+select lenght('aBCDF') from dual
+       *
+ERROR at line 1:
+ORA-00904: "LENGHT": invalid identifier
+
+
+SQL> select length('aBCDF') from dual;
+
+LENGTH('ABCDF')
+---------------
+              5
+
+SQL> select length('aB C DF') from dual;
+
+LENGTH('ABCDF')
+---------------
+              7
+
+SQL> select length(ename) from emp;
+
+LENGTH(ENAME)
+-------------
+            4
+            6
+            6
+
+            7
+            7
+            5
+            4
+
+8 rows selected.
+
+SQL> SELECT REPLACE('Hello World', 'Hello', 'Hi') AS Result FROM dual;
+
+RESULT
+--------
+Hi World
+
+SQL> SELECT REPLACE(ename, '8000', 'Suman') AS Result FROM emp;
+
+RESULT
+--------------------------------------------------
+Suman
+Ramesh
+Suresh
+
+Krishna
+Krishna
+Mohan
+efrf
+
+8 rows selected.
+
+SQL> SELECT eid,ename REPLACE(ename, '8000', 'Suman') AS Result FROM emp;
+SELECT eid,ename REPLACE(ename, '8000', 'Suman') AS Result FROM emp
+                        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT eid,ename, REPLACE(ename, '8000', 'Suman') AS Result FROM emp;
+
+       EID ENAME      RESULT
+---------- ---------- --------------------------------------------------
+       107 8000       Suman
+       102 Ramesh     Ramesh
+       103 Suresh     Suresh
+       108
+       101 Krishna    Krishna
+       104 Krishna    Krishna
+       105 Mohan      Mohan
+       106 efrf       efrf
+
+8 rows selected.
+
+SQL> select LPAD('oracle',10,'z') from dual;
+
+LPAD('ORAC
+----------
+zzzzoracle
+
+SQL> select RPAD('oracle',10,'z') from dual;
+
+RPAD('ORAC
+----------
+oraclezzzz
+
+SQL> Select LTRIM('zzoracle','z') from dual;
+
+LTRIM(
+------
+oracle
+
+SQL> Select RTRIM('zzoracle','z') from dual;
+
+RTRIM('Z
+--------
+zzoracle
+
+SQL> Select RTRIM('zzoraclezzz','z') from dual;
+
+RTRIM('Z
+--------
+zzoracle
+
+SQL> Select TRIM('z' from 'zzoraclezz' ) from dual;
+
+TRIM('
+------
+oracle
+
+SQL> Select TRIM('z' from 'zzoraclekkk' ) from dual;
+
+TRIM('Z'F
+---------
+oraclekkk
+
+SQL> Select TRIM('zz' from 'zzoraclekkk' ) from dual;
+Select TRIM('zz' from 'zzoraclekkk' ) from dual
+       *
+ERROR at line 1:
+ORA-30001: trim set should have only one character
+
+
+SQL> Select TRIM('z' from 'zzoraclekkk' ) from dual;
+
+TRIM('Z'F
+---------
+oraclekkk
+
+SQL> SELECT INSTR('Hello World', 'W') AS position FROM dual;
+
+  POSITION
+----------
+         7
+
+SQL> SELECT INSTR('Hello World', 'World') AS position FROM dual;
+
+  POSITION
+----------
+         7
+
+SQL> SELECT INSTR('Hello World', 'orld') AS position FROM dual;
+
+  POSITION
+----------
+         8
+
+SQL> SELECT INSTR('Hello World', 'korld') AS position FROM dual;
+
+  POSITION
+----------
+         0
+
+SQL> SELECT INSTR('Hello World', 'lorld') AS position FROM dual;
+
+  POSITION
+----------
+         0
+
+SQL> SELECT INSTR('Hello World', 'l') AS position FROM dual;
+
+  POSITION
+----------
+         3
+
+SQL> SELECT SUBSTR('ORACLE', 2, 3) FROM dual;
+
+SUB
+---
+RAC
+
+SQL> SELECT SUBSTR('ORACLE', 2, 10) FROM dual;
+
+SUBST
+-----
+RACLE
+
+SQL> SELECT 'Hello' || ' ' || 'beautiful' || ' ' || 'World' AS concatenated_string FROM dual;
+
+CONCATENATED_STRING
+---------------------
+Hello beautiful World
+
+SQL> SELECT CONCAT('Hello', 'World') AS concatenated_string FROM dual;
+
+CONCATENAT
+----------
+HelloWorld
+
+SQL> SELECT CONCAT('Hello' ||'  ' 'World') AS concatenated_string FROM dual;
+SELECT CONCAT('Hello' ||'  ' 'World') AS concatenated_string FROM dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> SELECT CONCAT('Hello' ||'  ' || 'World') AS concatenated_string FROM dual;
+SELECT CONCAT('Hello' ||'  ' || 'World') AS concatenated_string FROM dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> SELECT 'Hello' || ' ' || 'World' AS concatenated_string FROM dual;
+
+CONCATENATE
+-----------
+Hello World
+
+SQL> SELECT 'Hello' || '           ' || 'World' AS concatenated_string FROM dual;
+
+CONCATENATED_STRING
+---------------------
+Hello           World
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> SELECT TRANSLATE(sname, 'ae', '12') FROM emp;
+SELECT TRANSLATE(sname, 'ae', '12') FROM emp
+                 *
+ERROR at line 1:
+ORA-00904: "SNAME": invalid identifier
+
+
+SQL> SELECT TRANSLATE(ename, 'ae', '12') FROM emp;
+
+TRANSLATE(ENAME,'AE','12')
+----------------------------------------
+8000
+R1m2sh
+Sur2sh
+
+Krishn1
+Krishn1
+Moh1n
+2frf
+
+8 rows selected.
+
+SQL> SELECT TRANSLATE(ename, 'aeh', '128') FROM emp;
+
+TRANSLATE(ENAME,'AEH','128')
+----------------------------------------
+8000
+R1m2s8
+Sur2s8
+
+Kris8n1
+Kris8n1
+Mo81n
+2frf
+
+8 rows selected.
+
+SQL> SELECT ename, ASCII(ename) FROM emp;
+
+ENAME      ASCII(ENAME)
+---------- ------------
+8000                 56
+Ramesh               82
+Suresh               83
+
+Krishna              75
+Krishna              75
+Mohan                77
+efrf                101
+
+8 rows selected.
+
+SQL>
