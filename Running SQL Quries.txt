@@ -2016,3 +2016,1166 @@ efrf                101
 8 rows selected.
 
 SQL>
+*******************************
+
+SQL> SELECT ABS(-10) AS absolute_value FROM dual;
+
+ABSOLUTE_VALUE
+--------------
+            10
+
+SQL> SELECT ABS(-23.33) AS absolute_value FROM dual;
+
+ABSOLUTE_VALUE
+--------------
+         23.33
+
+SQL> Select SQRT(25) from dual;
+
+  SQRT(25)
+----------
+         5
+
+SQL> Select SQRT(125) from dual;
+
+ SQRT(125)
+----------
+11.1803399
+
+SQL> Select SQRT(625) from dual;
+
+ SQRT(625)
+----------
+        25
+
+SQL> select MOD(10,3) from dual;
+
+ MOD(10,3)
+----------
+         1
+
+SQL> select 10/3 as div from dual;
+
+       DIV
+----------
+3.33333333
+
+SQL> Select POWER(2,5) from dual;
+
+POWER(2,5)
+----------
+        32
+
+SQL> Select POWER(2,8) from dual;
+
+POWER(2,8)
+----------
+       256
+
+SQL> Select CEIL(40.9) from dual;
+
+CEIL(40.9)
+----------
+        41
+
+SQL> Select CEIL(40.2) from dual;
+
+CEIL(40.2)
+----------
+        41
+
+SQL> Select floor(40.2) from dual;
+
+FLOOR(40.2)
+-----------
+         40
+
+SQL> Select floor(40.9) from dual;
+
+FLOOR(40.9)
+-----------
+         40
+
+SQL> Select round(40.9) from dual;
+
+ROUND(40.9)
+-----------
+         41
+
+SQL> Select round(40.2) from dual;
+
+ROUND(40.2)
+-----------
+         40
+
+SQL> Select TRUNC(40.9) from dual;
+
+TRUNC(40.9)
+-----------
+         40
+
+SQL> Select TRUNC(40.123) from dual;
+
+TRUNC(40.123)
+-------------
+           40
+
+SQL> Select GREATEST (100,200,300) from dual;
+
+GREATEST(100,200,300)
+---------------------
+                  300
+
+SQL> Select GREATEST (1000,200,300) from dual;
+
+GREATEST(1000,200,300)
+----------------------
+                  1000
+
+SQL> Select LEAST (1000,200,300) from dual;
+
+LEAST(1000,200,300)
+-------------------
+                200
+
+SQL> SELECT SIGN(7) AS sign_value FROM dual;
+
+SIGN_VALUE
+----------
+         1
+
+SQL> SELECT SIGN(-7) AS sign_value FROM dual;
+
+SIGN_VALUE
+----------
+        -1
+
+SQL>
+=========================
+
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE
+---------
+05-NOV-26
+
+SQL> SELECT CURRENT_DATE FROM dual;
+
+CURRENT_D
+---------
+05-NOV-26
+
+SQL> select systimestamp from dual;
+
+SYSTIMESTAMP
+---------------------------------------------------------------------------
+05-NOV-26 09.27.31.192000 AM +05:30
+
+SQL> SELECT CURRENT_TIMESTAMP FROM dual;
+
+CURRENT_TIMESTAMP
+---------------------------------------------------------------------------
+05-NOV-26 09.28.11.556000 AM +05:30
+
+SQL> select systimestamp from dual;
+
+SYSTIMESTAMP
+---------------------------------------------------------------------------
+05-NOV-26 09.28.16.283000 AM +05:30
+
+SQL> select LOCALTIMESTAMP from dual;
+
+LOCALTIMESTAMP
+---------------------------------------------------------------------------
+05-NOV-26 09.29.03.212000 AM
+
+SQL> Select ADD_MONTHS(SYSDATE,12) from dual;
+
+ADD_MONTH
+---------
+05-NOV-27
+
+SQL> SQL> Select MONTHS_BETWEEN(sysdate,'11-JAN-25') from dual;
+SP2-0734: unknown command beginning "SQL> Selec..." - rest of line ignored.
+SQL> Select MONTHS_BETWEEN(sysdate,'11-JAN-25') from dual;
+
+MONTHS_BETWEEN(SYSDATE,'11-JAN-25')
+-----------------------------------
+                         21.8192391
+
+SQL> Select NEXT_DAY(SYSDATE,'MONDAY') from dual;
+
+NEXT_DAY(
+---------
+09-NOV-26
+
+SQL> Select LAST_DAY(SYSDATE) from dual;
+
+LAST_DAY(
+---------
+30-NOV-26
+
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE
+---------
+05-NOV-26
+
+SQL> SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') FROM dual;
+
+TO_CHAR(SY
+----------
+2026-11-05
+
+SQL> SELECT TO_CHAR(SYSDATE, 'DD-MM-YYYY') FROM dual;
+
+TO_CHAR(SY
+----------
+05-11-2026
+
+SQL> SELECT TO_CHAR(SYSDATE, 'Day: MONTH, DD, YYYY') FROM dual;
+
+TO_CHAR(SYSDATE,'DAY:MONTH,DD,YYYY')
+--------------------------------------------------------------------------------
+Thursday : NOVEMBER , 05, 2026
+
+SQL> SELECT TO_CHAR(SYSDATE, 'Day: DD, MONTH, YYYY') FROM dual;
+
+TO_CHAR(SYSDATE,'DAY:DD,MONTH,YYYY')
+--------------------------------------------------------------------------------
+Thursday : 05, NOVEMBER , 2026
+
+SQL>
+===================
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CONS1                          TABLE
+CONS2                          TABLE
+CONS3                          TABLE
+EMP                            TABLE
+EMP1                           TABLE
+SAMP1                          TABLE
+SAMP2                          TABLE
+STU1                           TABLE
+
+8 rows selected.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from emp where salary>=6000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where salary>=6000 order by salary;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       104 Krishna          6000
+       103 Suresh           7000
+       105 Mohan            9000
+
+SQL> select * from emp where salary>=6000 order by eid;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> create table empselect as select eid,ename,salary from emp where salary>=6000;
+
+Table created.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> create view empview as select eid,ename,salary from emp where salary>=6000;
+
+View created.
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> update emp set ename='Mohan' where eid=108;
+
+1 row updated.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> update emp set ename='Jhon' where eid=105;
+
+1 row updated.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Jhon             9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Jhon             9000
+
+SQL> insert into emp values(109,'Suman',8000);
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Jhon             9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       109 Suman            8000
+       104 Krishna          6000
+       105 Jhon             9000
+
+SQL> update empview set ename='Mr.Jhon' where eid=105;
+
+1 row updated.
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       109 Suman            8000
+       104 Krishna          6000
+       105 Mr.Jhon          9000
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon          9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> Create view Compview As select s.sid, s.sname, e.eid, e.ename from stu1 s, emp e;
+
+View created.
+
+SQL> select * from compview;
+
+       SID SNAME             EID ENAME
+---------- ---------- ---------- ----------
+       101 Krishna           107 8000
+       101 Krishna           102 Ramesh
+       101 Krishna           103 Suresh
+       101 Krishna           108 Mohan
+       101 Krishna           109 Suman
+       101 Krishna           101 Krishna
+       101 Krishna           104 Krishna
+       101 Krishna           105 Mr.Jhon
+       101 Krishna           106 efrf
+       102 Kiran             107 8000
+       102 Kiran             102 Ramesh
+
+       SID SNAME             EID ENAME
+---------- ---------- ---------- ----------
+       102 Kiran             103 Suresh
+       102 Kiran             108 Mohan
+       102 Kiran             109 Suman
+       102 Kiran             101 Krishna
+       102 Kiran             104 Krishna
+       102 Kiran             105 Mr.Jhon
+       102 Kiran             106 efrf
+       103 Suresh            107 8000
+       103 Suresh            102 Ramesh
+       103 Suresh            103 Suresh
+       103 Suresh            108 Mohan
+
+       SID SNAME             EID ENAME
+---------- ---------- ---------- ----------
+       103 Suresh            109 Suman
+       103 Suresh            101 Krishna
+       103 Suresh            104 Krishna
+       103 Suresh            105 Mr.Jhon
+       103 Suresh            106 efrf
+
+27 rows selected.
+
+SQL> create view readview as select * from emp;
+
+View created.
+
+SQL> select * from readview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon          9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> update readview set ename='Mr.Jhon123' where eid=105;
+
+1 row updated.
+
+SQL> create view readview1 as select * from emp read only;
+create view readview1 as select * from emp read only
+                                                *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> create view readview1 as select * from emp readonly;
+
+View created.
+
+SQL> update readview1 set ename='Mr.Jhon123' where eid=105;
+
+1 row updated.
+
+SQL> create view readview2 as select * from emp with read only;
+
+View created.
+
+SQL> update readview2 set ename='Mr.Jhon123' where eid=105;
+update readview2 set ename='Mr.Jhon123' where eid=105
+                     *
+ERROR at line 1:
+ORA-42399: cannot perform a DML operation on a read-only view
+
+
+SQL> Create materialized view MV1 As select * from emp;
+
+Materialized view created.
+
+SQL> select * from mv1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> update emp set ename='aaaa' where eid=106;
+
+1 row updated.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 aaaa             5000
+
+9 rows selected.
+
+SQL> select * from mv1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> EXEC DBMS_MVIEW.REFRESH('MV1');
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from mv1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 aaaa             5000
+
+9 rows selected.
+
+SQL>
+
+=================
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CONS1                          TABLE
+CONS2                          TABLE
+CONS3                          TABLE
+EMP                            TABLE
+EMP1                           TABLE
+SAMP1                          TABLE
+SAMP2                          TABLE
+STU1                           TABLE
+
+8 rows selected.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from emp where salary>=6000;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp where salary>=6000 order by salary;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       104 Krishna          6000
+       103 Suresh           7000
+       105 Mohan            9000
+
+SQL> select * from emp where salary>=6000 order by eid;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> create table empselect as select eid,ename,salary from emp where salary>=6000;
+
+Table created.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> create view empview as select eid,ename,salary from emp where salary>=6000;
+
+View created.
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108                  5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> update emp set ename='Mohan' where eid=108;
+
+1 row updated.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mohan            9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> update emp set ename='Jhon' where eid=105;
+
+1 row updated.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Jhon             9000
+       106 efrf             5000
+
+8 rows selected.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Jhon             9000
+
+SQL> insert into emp values(109,'Suman',8000);
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Jhon             9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       109 Suman            8000
+       104 Krishna          6000
+       105 Jhon             9000
+
+SQL> update empview set ename='Mr.Jhon' where eid=105;
+
+1 row updated.
+
+SQL> select * from empview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       109 Suman            8000
+       104 Krishna          6000
+       105 Mr.Jhon          9000
+
+SQL> select * from empselect;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       103 Suresh           7000
+       104 Krishna          6000
+       105 Mohan            9000
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon          9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> select * from stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> Create view Compview As select s.sid, s.sname, e.eid, e.ename from stu1 s, emp e;
+
+View created.
+
+SQL> select * from compview;
+
+       SID SNAME             EID ENAME
+---------- ---------- ---------- ----------
+       101 Krishna           107 8000
+       101 Krishna           102 Ramesh
+       101 Krishna           103 Suresh
+       101 Krishna           108 Mohan
+       101 Krishna           109 Suman
+       101 Krishna           101 Krishna
+       101 Krishna           104 Krishna
+       101 Krishna           105 Mr.Jhon
+       101 Krishna           106 efrf
+       102 Kiran             107 8000
+       102 Kiran             102 Ramesh
+
+       SID SNAME             EID ENAME
+---------- ---------- ---------- ----------
+       102 Kiran             103 Suresh
+       102 Kiran             108 Mohan
+       102 Kiran             109 Suman
+       102 Kiran             101 Krishna
+       102 Kiran             104 Krishna
+       102 Kiran             105 Mr.Jhon
+       102 Kiran             106 efrf
+       103 Suresh            107 8000
+       103 Suresh            102 Ramesh
+       103 Suresh            103 Suresh
+       103 Suresh            108 Mohan
+
+       SID SNAME             EID ENAME
+---------- ---------- ---------- ----------
+       103 Suresh            109 Suman
+       103 Suresh            101 Krishna
+       103 Suresh            104 Krishna
+       103 Suresh            105 Mr.Jhon
+       103 Suresh            106 efrf
+
+27 rows selected.
+
+SQL> create view readview as select * from emp;
+
+View created.
+
+SQL> select * from readview;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon          9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> update readview set ename='Mr.Jhon123' where eid=105;
+
+1 row updated.
+
+SQL> create view readview1 as select * from emp read only;
+create view readview1 as select * from emp read only
+                                                *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> create view readview1 as select * from emp readonly;
+
+View created.
+
+SQL> update readview1 set ename='Mr.Jhon123' where eid=105;
+
+1 row updated.
+
+SQL> create view readview2 as select * from emp with read only;
+
+View created.
+
+SQL> update readview2 set ename='Mr.Jhon123' where eid=105;
+update readview2 set ename='Mr.Jhon123' where eid=105
+                     *
+ERROR at line 1:
+ORA-42399: cannot perform a DML operation on a read-only view
+
+
+SQL> Create materialized view MV1 As select * from emp;
+
+Materialized view created.
+
+SQL> select * from mv1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> update emp set ename='aaaa' where eid=106;
+
+1 row updated.
+
+SQL> select * from emp;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 aaaa             5000
+
+9 rows selected.
+
+SQL> select * from mv1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 efrf             5000
+
+9 rows selected.
+
+SQL> EXEC DBMS_MVIEW.REFRESH('MV1');
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from mv1;
+
+       EID ENAME          SALARY
+---------- ---------- ----------
+       107 8000             5000
+       102 Ramesh           5000
+       103 Suresh           7000
+       108 Mohan            5000
+       109 Suman            8000
+       101 Krishna          4000
+       104 Krishna          6000
+       105 Mr.Jhon123       9000
+       106 aaaa             5000
+
+9 rows selected.
+
+SQL>
+SQL> create table stu(sid number(5) primary key,name char(10));
+
+Table created.
+
+SQL> desc stu;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL NUMBER(5)
+ NAME                                               CHAR(10)
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+COMPVIEW                       VIEW
+CONS1                          TABLE
+CONS2                          TABLE
+CONS3                          TABLE
+EMP                            TABLE
+EMP1                           TABLE
+EMPSELECT                      TABLE
+EMPVIEW                        VIEW
+MV1                            TABLE
+READVIEW                       VIEW
+READVIEW1                      VIEW
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+READVIEW2                      VIEW
+SAMP1                          TABLE
+SAMP2                          TABLE
+STU                            TABLE
+STU1                           TABLE
+
+16 rows selected.
+
+SQL> create index idx1 on stu(sid);
+create index idx1 on stu(sid)
+                         *
+ERROR at line 1:
+ORA-01408: such column list already indexed
+
+
+SQL> create index idx1 on stu(name);
+
+Index created.
+
+SQL> create index idx1 on stu(name);
+create index idx1 on stu(name)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> Select index_name, table_name from user_indexes;
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C007004                    STU
+IDX1                           STU
+SYS_C007001                    CONS3
+SYS_C006999                    CONS1
+
+SQL>
