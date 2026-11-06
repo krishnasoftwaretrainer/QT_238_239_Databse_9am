@@ -3179,3 +3179,307 @@ SYS_C007001                    CONS3
 SYS_C006999                    CONS1
 
 SQL>
+
+========================
+
+SQL> SELECT * FROM emp;
+
+       EID ENAME          SALARY        AGE
+---------- ---------- ---------- ----------
+       107 8000             5000         44
+       102 Ramesh           5000         34
+       103 Suresh           7000         66
+       108 Mohan            5000         22
+       109 Suman            8000         84
+       101 Krishna          4000         40
+       104 Krishna          6000         40
+       105 Mr.Jhon123       9000         74
+       106 aaaa             5000         64
+
+9 rows selected.
+
+SQL> SELECT * FROM stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> create table emp2 as select * from emp where salary>6500;
+
+Table created.
+
+SQL> SELECT * FROM emp2;
+
+       EID ENAME          SALARY        AGE
+---------- ---------- ---------- ----------
+       103 Suresh           7000         66
+       109 Suman            8000         84
+       105 Mr.Jhon123       9000         74
+
+SQL> SELECT * FROM stu1;
+
+       SID SNAME      DOB       PERCENTAGE
+---------- ---------- --------- ----------
+       101 Krishna    15-MAR-98       99.9
+       102 Kiran      15-MAR-98       99.9
+       103 Suresh     11-JAN-99       77.7
+
+SQL> SELECT stu1.SID, STU1.SNAME,STU1.PERCENTAGE, EMP2.EID,EMP2.SALARY FROM STU1 INNER JOIN EMP2 ON STU1.SID = EMP2.EID;
+
+       SID SNAME      PERCENTAGE        EID     SALARY
+---------- ---------- ---------- ---------- ----------
+       103 Suresh           77.7        103       7000
+
+SQL> SELECT stu1.SID, STU1.SNAME,STU1.PERCENTAGE, EMP2.EID,EMP2.SALARY FROM STU1 INNER JOIN EMP2 ON STU1.SID != EMP2.EID;
+
+       SID SNAME      PERCENTAGE        EID     SALARY
+---------- ---------- ---------- ---------- ----------
+       101 Krishna          99.9        103       7000
+       101 Krishna          99.9        109       8000
+       101 Krishna          99.9        105       9000
+       102 Kiran            99.9        103       7000
+       102 Kiran            99.9        109       8000
+       102 Kiran            99.9        105       9000
+       103 Suresh           77.7        109       8000
+       103 Suresh           77.7        105       9000
+
+8 rows selected.
+
+SQL> SELECT stu1.SID, STU1.SNAME,STU1.PERCENTAGE, EMP2.EID,EMP2.SALARY FROM STU1 LEFT JOIN EMP2 ON STU1.SID = EMP2.EID;
+
+       SID SNAME      PERCENTAGE        EID     SALARY
+---------- ---------- ---------- ---------- ----------
+       103 Suresh           77.7        103       7000
+       102 Kiran            99.9
+       101 Krishna          99.9
+
+SQL> SELECT stu1.SID, STU1.SNAME,STU1.PERCENTAGE, EMP2.EID,EMP2.SALARY FROM STU1 RIGHT JOIN EMP2 ON STU1.SID = EMP2.EID;
+
+       SID SNAME      PERCENTAGE        EID     SALARY
+---------- ---------- ---------- ---------- ----------
+       103 Suresh           77.7        103       7000
+                                        105       9000
+                                        109       8000
+
+SQL> SELECT stu1.SID, STU1.SNAME,STU1.PERCENTAGE, EMP2.EID,EMP2.SALARY FROM STU1 FULL JOIN EMP2 ON STU1.SID = EMP2.EID;
+
+       SID SNAME      PERCENTAGE        EID     SALARY
+---------- ---------- ---------- ---------- ----------
+       103 Suresh           77.7        103       7000
+                                        109       8000
+                                        105       9000
+       102 Kiran            99.9
+       101 Krishna          99.9
+
+SQL> SELECT stu1.SID, STU1.SNAME,STU1.PERCENTAGE, EMP2.EID,EMP2.SALARY FROM STU1 CROSS JOIN EMP2;
+
+       SID SNAME      PERCENTAGE        EID     SALARY
+---------- ---------- ---------- ---------- ----------
+       101 Krishna          99.9        103       7000
+       101 Krishna          99.9        109       8000
+       101 Krishna          99.9        105       9000
+       102 Kiran            99.9        103       7000
+       102 Kiran            99.9        109       8000
+       102 Kiran            99.9        105       9000
+       103 Suresh           77.7        103       7000
+       103 Suresh           77.7        109       8000
+       103 Suresh           77.7        105       9000
+
+9 rows selected.
+
+SQL> SELect * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+COMPVIEW                       VIEW
+CONS1                          TABLE
+CONS2                          TABLE
+CONS3                          TABLE
+EMP                            TABLE
+EMP1                           TABLE
+EMP2                           TABLE
+EMPSELECT                      TABLE
+EMPVIEW                        VIEW
+MV1                            TABLE
+READVIEW                       VIEW
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+READVIEW1                      VIEW
+READVIEW2                      VIEW
+SAMP1                          TABLE
+SAMP2                          TABLE
+STU                            TABLE
+STU1                           TABLE
+
+17 rows selected.
+
+SQL> desc samp2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               CHAR(10)
+
+SQL> alter table samp2 add(age number(2));
+
+Table altered.
+
+SQL> desc samp2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               CHAR(10)
+ AGE                                                NUMBER(2)
+
+SQL> CREATE SEQUENCE samp2_id START WITH 1 INCREMENT BY 1;
+
+Sequence created.
+
+SQL> INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'John',80);
+
+1 row created.
+
+SQL> INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'Krishna',30);
+
+1 row created.
+
+SQL> select * from samp2;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 John               80
+         2 Krishna            30
+
+SQL> INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'QT',40);
+
+1 row created.
+
+SQL> select * from samp2;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 John               80
+         2 Krishna            30
+         3 QT                 40
+
+SQL> SELECT samp2_id.CURRVAL FROM DUAL;
+
+   CURRVAL
+----------
+         3
+
+SQL> ALTER SEQUENCE samp2_id INCREMENT BY 1 MAXVALUE 6;
+
+Sequence altered.
+
+SQL> INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'QT',40);
+
+1 row created.
+
+SQL> INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'QT',40);
+
+1 row created.
+
+SQL> select * from samp2;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 John               80
+         2 Krishna            30
+         3 QT                 40
+         4 QT                 40
+         5 QT                 40
+
+SQL> INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'Krishna',30);
+
+1 row created.
+
+SQL> select * from samp2;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 John               80
+         2 Krishna            30
+         3 QT                 40
+         4 QT                 40
+         5 QT                 40
+         6 Krishna            30
+
+6 rows selected.
+
+SQL> INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'Krishna',30);
+INSERT INTO samp2 (id, name,age) VALUES (samp2_id.NEXTVAL, 'Krishna',30)
+            *
+ERROR at line 1:
+ORA-08004: sequence SAMP2_ID.NEXTVAL exceeds MAXVALUE and cannot be
+instantiated
+
+
+SQL> select * from samp3;
+select * from samp3
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> CREATE SYNONYM samp3 FOR samp2;
+
+Synonym created.
+
+SQL> select * from samp3;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 John               80
+         2 Krishna            30
+         3 QT                 40
+         4 QT                 40
+         5 QT                 40
+         6 Krishna            30
+
+6 rows selected.
+
+SQL> select * from samp2;
+
+        ID NAME              AGE
+---------- ---------- ----------
+         1 John               80
+         2 Krishna            30
+         3 QT                 40
+         4 QT                 40
+         5 QT                 40
+         6 Krishna            30
+
+6 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+COMPVIEW                       VIEW
+CONS1                          TABLE
+CONS2                          TABLE
+CONS3                          TABLE
+EMP                            TABLE
+EMP1                           TABLE
+EMP2                           TABLE
+EMPSELECT                      TABLE
+EMPVIEW                        VIEW
+MV1                            TABLE
+READVIEW                       VIEW
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+READVIEW1                      VIEW
+READVIEW2                      VIEW
+SAMP1                          TABLE
+SAMP2                          TABLE
+SAMP3                          SYNONYM
+STU                            TABLE
+STU1                           TABLE
+
+18 rows selected.
+
+SQL>
