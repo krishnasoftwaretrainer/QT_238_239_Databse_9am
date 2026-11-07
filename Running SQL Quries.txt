@@ -3483,3 +3483,368 @@ STU1                           TABLE
 18 rows selected.
 
 SQL>
+========
+
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Nov 7 09:25:18 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt238;
+Enter password:
+Connected.
+SQL> create table locktable(pid number(3),pname vracahr2(10,price number(5));
+create table locktable(pid number(3),pname vracahr2(10,price number(5))
+                                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table locktable(pid number(3),pname vracahr2(10),price number(5));
+create table locktable(pid number(3),pname vracahr2(10),price number(5))
+                                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table locktable(pid number(3),pname varchar2(10),price number(5));
+
+Table created.
+
+SQL> desc locktable;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PID                                                NUMBER(3)
+ PNAME                                              VARCHAR2(10)
+ PRICE                                              NUMBER(5)
+     insert into locktable values(101,'AC',50000);
+SQL>
+1 row created.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+       102 TV               8999
+
+SQL>
+==================
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Nov 7 09:25:17 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt238
+Enter password:
+Connected.
+SQL> desc locktable;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PID                                               NUMBER(3)
+ PNAME                                             VARCHAR2(10)
+ PRICE                                             NUMBER(5)
+
+SQL> select * from locktable;
+
+no rows selected
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+
+SQL>  insert into locktable values(102,'TV',9999);
+
+1 row created.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+       102 TV               9999
+
+SQL> update locktable set price=8999;
+
+2 rows updated.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC               8999
+       102 TV               8999
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+
+SQL>  insert into locktable values(102,'TV',9999);
+
+1 row created.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+       102 TV               9999
+
+SQL> update locktable set price=8999 where pid=102;
+
+1 row updated.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+       102 TV               8999
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+       102 TV               8999
+
+SQL>
+======================
+
+SQL> select * from locktable;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+       102 TV               8999
+
+SQL> select pid,pname from locktable;
+
+       PID PNAME
+---------- ----------
+       101 AC
+       102 TV
+
+SQL> select pid as product_id,pname as product_name from locktable;
+
+PRODUCT_ID PRODUCT_NA
+---------- ----------
+       101 AC
+       102 TV
+
+SQL> create products as selct * from locktable;
+create products as selct * from locktable
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command
+
+
+SQL> create table products as selct * from locktable;
+create table products as selct * from locktable
+                         *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> create table products as select * from locktable;
+
+Table created.
+
+SQL> select * from products;
+
+       PID PNAME           PRICE
+---------- ---------- ----------
+       101 AC              50000
+       102 TV               8999
+
+SQL> CREATE OR REPLACE TRIGGER trg_products_ins
+  2  BEFORE INSERT ON products
+  3  FOR EACH ROW
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE('Insert operation performed successfully');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> insert into products values(103,'Fan',3000);
+
+1 row created.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> insert into products values(104,'Laptop',60000);
+Insert operation performed successfully
+
+1 row created.
+
+SQL>
+
+CREATE OR REPLACE TRIGGER trg_products_ins
+BEFORE INSERT ON products
+FOR EACH ROW
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Insert operation performed successfully');
+END;
+/
+
+=======================
+
+
+SQL> CREATE TABLESPACE test_ts1 DATAFILE 'test_ts1.dbf' SIZE 50M;
+
+Tablespace created.
+
+SQL> create table test11(id number(3),name char(10));
+
+Table created.
+
+SQL> ALTER USER qt238 DEFAULT TABLESPACE test_ts1;
+
+User altered.
+
+SQL> ALTER USER qt238 QUOTA UNLIMITED ON test_ts1;
+
+User altered.
+
+SQL> create table test11(id number(3),name char(10));
+create table test11(id number(3),name char(10))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table test12(id number(3),name char(10));
+
+Table created.
+
+SQL> insert into test12 values(11,'jghbc');
+
+1 row created.
+
+SQL> select * from test12;
+
+        ID NAME
+---------- ----------
+        11 jghbc
+
+SQL> drop table test12;
+
+Table dropped.
+
+SQL> select * from test12;
+select * from test12
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from test12;
+select * from test12
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> FLASHBACK TABLE test12 TO BEFORE DROP;
+
+Flashback complete.
+
+SQL> select * from test12;
+
+        ID NAME
+---------- ----------
+        11 jghbc
+
+SQL> insert into test12 values(12,'aaaa');
+
+1 row created.
+
+SQL> select * from test12;
+
+        ID NAME
+---------- ----------
+        11 jghbc
+        12 aaaa
+
+SQL> purge table test12;
+purge table test12
+*
+ERROR at line 1:
+ORA-38307: object not in RECYCLE BIN
+
+
+SQL> select * from test12;
+
+        ID NAME
+---------- ----------
+        11 jghbc
+        12 aaaa
+
+SQL> drop table test12;
+
+Table dropped.
+
+SQL> select * from test12;
+select * from test12
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> purge table test12;
+
+Table purged.
+
+SQL> select * from test12;
+select * from test12
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> FLASHBACK TABLE test12 TO BEFORE DROP;
+FLASHBACK TABLE test12 TO BEFORE DROP
+*
+ERROR at line 1:
+ORA-38305: object not in RECYCLE BIN
+
+
+SQL>
